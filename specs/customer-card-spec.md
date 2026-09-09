@@ -12,7 +12,8 @@
 ### Functional Requirements
 - Display customer name, company name, and health score (0-100)
 - Show customer domains (websites) for health monitoring context
-- Visual health indicator with color coding based on score
+- Display domain count when customer has multiple domains
+- Visual health indicator with color coding based on score, applied to both the health score badge and the card background
 - Clickable card to view detailed customer profile
 - Clean, card-based responsive design
 
@@ -67,8 +68,8 @@
 ## Acceptance Criteria
 
 - [ ] Displays customer name, email, company, and health score correctly
-- [ ] Shows customer domains with proper count
-- [ ] Health score colors match specification: red (0-30), yellow (31-70), green (71-100)
+- [ ] Shows customer domains, with a domain count shown when there is more than one
+- [ ] Health score colors match specification: red (0-30), yellow (31-70), green (71-100), applied to the card background as well as the health score badge
 - [ ] Responsive design works on mobile (320px+), tablet (768px+), and desktop (1024px+)
 - [ ] Proper TypeScript interfaces defined and exported
 - [ ] Card is clickable with visible hover state
