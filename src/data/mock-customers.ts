@@ -13,6 +13,29 @@ export interface Customer {
   domains?: string[]; // Customer websites to health check
   createdAt?: string;
   updatedAt?: string;
+  // Health Score Calculator factor inputs (optional — feed HealthScoreInput in src/lib/healthCalculator.ts)
+  paymentHistory?: {
+    daysSinceLastPayment?: number;
+    avgPaymentDelayDays?: number;
+    overdueAmount?: number;
+    hasNoPaymentHistory?: boolean;
+  };
+  engagement?: {
+    loginFrequencyPerWeek?: number;
+    featureUsageCount?: number;
+    supportTicketCount?: number;
+  };
+  contract?: {
+    daysUntilRenewal?: number;
+    contractValue?: number;
+    recentUpgrade?: boolean;
+  };
+  support?: {
+    avgResolutionTimeHours?: number;
+    satisfactionScore?: number;
+    escalationCount?: number;
+    hasNoSupportHistory?: boolean;
+  };
 }
 
 export const mockCustomers: Customer[] = [
@@ -25,7 +48,11 @@ export const mockCustomers: Customer[] = [
     subscriptionTier: 'premium',
     domains: ['acmecorp.com', 'portal.acmecorp.com'],
     createdAt: '2024-01-15T10:30:00Z',
-    updatedAt: '2024-01-15T10:30:00Z'
+    updatedAt: '2024-01-15T10:30:00Z',
+    paymentHistory: { daysSinceLastPayment: 5, avgPaymentDelayDays: 0, overdueAmount: 0 },
+    engagement: { loginFrequencyPerWeek: 8, featureUsageCount: 25, supportTicketCount: 1 },
+    contract: { daysUntilRenewal: 240, contractValue: 60000, recentUpgrade: true },
+    support: { avgResolutionTimeHours: 4, satisfactionScore: 9, escalationCount: 0 }
   },
   {
     id: '2',
@@ -36,7 +63,11 @@ export const mockCustomers: Customer[] = [
     subscriptionTier: 'basic',
     domains: ['techstart.io'],
     createdAt: '2024-01-20T14:22:00Z',
-    updatedAt: '2024-01-20T14:22:00Z'
+    updatedAt: '2024-01-20T14:22:00Z',
+    paymentHistory: { daysSinceLastPayment: 35, avgPaymentDelayDays: 12, overdueAmount: 800 },
+    engagement: { loginFrequencyPerWeek: 2, featureUsageCount: 6, supportTicketCount: 4 },
+    contract: { daysUntilRenewal: 60, contractValue: 12000, recentUpgrade: false },
+    support: { avgResolutionTimeHours: 30, satisfactionScore: 6, escalationCount: 1 }
   },
   {
     id: '3',

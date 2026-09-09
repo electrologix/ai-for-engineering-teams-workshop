@@ -1,12 +1,14 @@
+import { memo } from 'react';
 import { Customer } from '@/data/mock-customers';
 import HealthIndicator, { getHealthCardClasses } from './HealthIndicator';
 
 export interface CustomerCardProps {
   customer: Customer;
   onClick?: (customer: Customer) => void;
+  isSelected?: boolean;
 }
 
-export default function CustomerCard({ customer, onClick }: CustomerCardProps) {
+function CustomerCard({ customer, onClick, isSelected = false }: CustomerCardProps) {
   const { name, company, email, healthScore, domains } = customer;
   const domainCount = domains?.length ?? 0;
 
@@ -14,7 +16,10 @@ export default function CustomerCard({ customer, onClick }: CustomerCardProps) {
     <button
       type="button"
       onClick={() => onClick?.(customer)}
-      className={`w-full max-w-[400px] min-h-[120px] text-left rounded-lg border p-4 shadow-sm transition-shadow hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${getHealthCardClasses(healthScore)}`}
+      aria-pressed={isSelected}
+      className={`w-full max-w-[400px] min-h-[120px] text-left rounded-lg border p-4 shadow-sm transition-shadow hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${getHealthCardClasses(healthScore)} ${
+        isSelected ? 'ring-2 ring-blue-500 border-blue-500 shadow-md' : ''
+      }`}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
@@ -42,3 +47,5 @@ export default function CustomerCard({ customer, onClick }: CustomerCardProps) {
     </button>
   );
 }
+
+export default memo(CustomerCard);

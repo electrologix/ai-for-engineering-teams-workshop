@@ -1,29 +1,37 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
+import CustomerCard from '../components/CustomerCard';
+import MarketIntelligenceWidget from '../components/MarketIntelligenceWidget';
+import { mockCustomers, Customer } from '../data/mock-customers';
 
-// Dynamic component imports with error boundaries
-const CustomerCardDemo = () => {
-  try {
-    // Try to import CustomerCard - this will work after Exercise 3
-    const CustomerCard = require('../components/CustomerCard')?.default;
-    const mockCustomers = require('../data/mock-customers')?.mockCustomers;
-    
-    if (CustomerCard && mockCustomers?.[0]) {
-      return (
-        <div className="space-y-4">
-          <p className="text-green-600 text-sm font-medium">✅ CustomerCard implemented!</p>
-          <div className="flex flex-wrap gap-4">
-            <CustomerCard customer={mockCustomers[0]} />
-            <CustomerCard customer={mockCustomers[1]} />
-          </div>
+const CustomerCardDemo = ({
+  selectedCustomer,
+  onSelect
+}: {
+  selectedCustomer: Customer | null;
+  onSelect: (customer: Customer) => void;
+}) => {
+  if (mockCustomers?.[0]) {
+    return (
+      <div className="space-y-4">
+        <p className="text-green-600 text-sm font-medium">✅ CustomerCard implemented!</p>
+        <div className="flex flex-wrap gap-4">
+          <CustomerCard
+            customer={mockCustomers[0]}
+            onClick={onSelect}
+            isSelected={selectedCustomer?.id === mockCustomers[0].id}
+          />
+          <CustomerCard
+            customer={mockCustomers[1]}
+            onClick={onSelect}
+            isSelected={selectedCustomer?.id === mockCustomers[1].id}
+          />
         </div>
-      );
-    }
-  } catch (error) {
-    // Component doesn't exist yet
+      </div>
+    );
   }
-  
+
   return (
     <div className="text-gray-500 text-sm">
       After Exercise 3, your CustomerCard components will appear here showing customer information with health scores.
@@ -42,6 +50,8 @@ const DashboardWidgetDemo = ({ widgetName, exerciseNumber }: { widgetName: strin
 };
 
 export default function Home() {
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       {/* Header */}
@@ -72,8 +82,11 @@ export default function Home() {
         <section className="bg-white rounded-lg shadow p-6">
           <h3 className="text-lg font-semibold mb-4">CustomerCard Component</h3>
           <Suspense fallback={<div className="text-gray-500">Loading...</div>}>
-            <CustomerCardDemo />
+            <CustomerCardDemo selectedCustomer={selectedCustomer} onSelect={setSelectedCustomer} />
           </Suspense>
+          <p className="mt-2 text-xs text-gray-400">
+            Select a customer card above to drive the Market Intelligence widget below.
+          </p>
         </section>
 
         {/* Dashboard Widgets Section */}
@@ -81,7 +94,7 @@ export default function Home() {
           <h3 className="text-lg font-semibold mb-4">Dashboard Widgets</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <DashboardWidgetDemo widgetName="Domain Health Widget" exerciseNumber={5} />
-            <DashboardWidgetDemo widgetName="Market Intelligence" exerciseNumber={6} />
+            <MarketIntelligenceWidget company={selectedCustomer?.company} />
             <DashboardWidgetDemo widgetName="Predictive Alerts" exerciseNumber={8} />
           </div>
         </section>
