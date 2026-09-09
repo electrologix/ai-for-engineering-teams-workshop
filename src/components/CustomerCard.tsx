@@ -1,28 +1,9 @@
 import { Customer } from '@/data/mock-customers';
+import HealthIndicator, { getHealthCardClasses } from './HealthIndicator';
 
 export interface CustomerCardProps {
   customer: Customer;
   onClick?: (customer: Customer) => void;
-}
-
-function getHealthColorClasses(healthScore: number): string {
-  if (healthScore <= 30) {
-    return 'bg-red-100 text-red-800 border-red-300';
-  }
-  if (healthScore <= 70) {
-    return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-  }
-  return 'bg-green-100 text-green-800 border-green-300';
-}
-
-function getHealthCardClasses(healthScore: number): string {
-  if (healthScore <= 30) {
-    return 'bg-red-50 border-red-200 hover:border-red-300';
-  }
-  if (healthScore <= 70) {
-    return 'bg-yellow-50 border-yellow-200 hover:border-yellow-300';
-  }
-  return 'bg-green-50 border-green-200 hover:border-green-300';
 }
 
 export default function CustomerCard({ customer, onClick }: CustomerCardProps) {
@@ -40,11 +21,7 @@ export default function CustomerCard({ customer, onClick }: CustomerCardProps) {
           <h3 className="truncate text-base font-semibold text-gray-900">{name}</h3>
           <p className="truncate text-sm text-gray-600">{company}</p>
         </div>
-        <span
-          className={`shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-medium ${getHealthColorClasses(healthScore)}`}
-        >
-          {healthScore}
-        </span>
+        <HealthIndicator healthScore={healthScore} />
       </div>
 
       {domainCount > 0 && (
