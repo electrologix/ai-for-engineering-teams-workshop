@@ -7,7 +7,7 @@ export interface CustomerCardProps {
 }
 
 export default function CustomerCard({ customer, onClick }: CustomerCardProps) {
-  const { name, company, healthScore, domains } = customer;
+  const { name, company, email, healthScore, domains } = customer;
   const domainCount = domains?.length ?? 0;
 
   return (
@@ -20,6 +20,7 @@ export default function CustomerCard({ customer, onClick }: CustomerCardProps) {
         <div className="min-w-0">
           <h3 className="truncate text-base font-semibold text-gray-900">{name}</h3>
           <p className="truncate text-sm text-gray-600">{company}</p>
+          {email && <p className="truncate text-xs text-gray-500">{email}</p>}
         </div>
         <HealthIndicator healthScore={healthScore} />
       </div>

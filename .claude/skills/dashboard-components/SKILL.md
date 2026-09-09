@@ -37,8 +37,8 @@ Health scores are 0-100. Map them to color bands like this:
 
 | Range   | Band   | Example Tailwind classes                          |
 |---------|--------|----------------------------------------------------|
-| 0-40    | red    | `bg-red-50 text-red-800 border-red-300`             |
-| 41-70   | yellow | `bg-yellow-50 text-yellow-800 border-yellow-300`    |
+| 0-30    | red    | `bg-red-50 text-red-800 border-red-300`             |
+| 31-70   | yellow | `bg-yellow-50 text-yellow-800 border-yellow-300`    |
 | 71-100  | green  | `bg-green-50 text-green-800 border-green-300`       |
 
 - Clamp/normalize the score first (finite, 0-100) before banding it — see
@@ -48,11 +48,6 @@ Health scores are 0-100. Map them to color bands like this:
   (card background/border) exported from `src/components/HealthIndicator.tsx`.
 - If you add a new place that needs health-based coloring, import those helpers
   rather than hardcoding new threshold logic.
-
-  > Note: the current `HealthIndicator.tsx` implementation bands at `<=30` /
-  > `<=70` / `>70`, not `0-40/41-70/71-100`. If you touch that file, reconcile the
-  > boundary at 31-40 with whoever owns the health-score spec before changing it,
-  > since the two are currently mismatched.
 
 ## General component conventions
 
